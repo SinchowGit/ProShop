@@ -1,0 +1,14 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "MERN stack e-commerce site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Saurabh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
