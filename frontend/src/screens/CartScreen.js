@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 import { Row, Col, Image, ListGroup, Form, Button, Card } from 'react-bootstrap'
 
 import Message from '../components/Message'
@@ -21,10 +21,6 @@ const CartScreen = () => {
 
   const cart = useSelector(state => state.cart)
   const { cartItems } = cart
-
-  const removeFromCartHandler = (id) => {
-    console.log('remove')
-  }
 
   const checkoutHandler = () => {
     navigate('/login?redirect=shipping')
@@ -59,7 +55,7 @@ const CartScreen = () => {
                     </Form.Control>
                   </Col>
                   <Col md={2}>
-                    <Button type='button' variant='light' onClick={() => removeFromCartHandler(item.product)}>
+                    <Button type='button' variant='light' onClick={e => dispatch(removeFromCart(item.product))}>
                         <i className='fa fa-trash'></i>
                     </Button>
                   </Col>
