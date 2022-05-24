@@ -13,13 +13,39 @@ export const userLoginReducer = (state = {}, action) => {
     }
 }
 
-export const userREGISTERReducer = (state = {}, action) => {
+export const userRegisterReducer = (state = {}, action) => {
     switch (action.type) {
         case 'USER_REGISTER_REQUEST':
             return { loading: true }
         case 'USER_REGISTER_SUCCESS':
             return { loading: false, userInfo: action.payLoad }
         case 'USER_REGISTER_FAIL':
+            return { loading: false, error: action.payLoad }
+        default:
+            return state
+    }
+}
+
+export const userDetailsReducer = (state = { user: {} }, action) => {
+    switch (action.type) {
+        case 'USER_DETAILS_REQUEST':
+            return { ...state, loading: true }
+        case 'USER_DETAILS_SUCCESS':
+            return { loading: false, user: action.payLoad }
+        case 'USER_DETAILS_FAIL':
+            return { loading: false, error: action.payLoad }
+        default:
+            return state
+    }
+}
+
+export const userUpdateProfileReducer = (state = { user: {} }, action) => {
+    switch (action.type) {
+        case 'USER_UPDATE_PROFILE_REQUEST':
+            return { ...state, loading: true }
+        case 'USER_UPDATE_PROFILE_SUCCESS':
+            return { loading: false, success: true, userInfo: action.payLoad }
+        case 'USER_UPDATE_PROFILE_FAIL':
             return { loading: false, error: action.payLoad }
         default:
             return state
