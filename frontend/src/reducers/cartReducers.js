@@ -1,4 +1,4 @@
-export const  cartReducer = (state = {cartItems: []}, action) => {
+export const  cartReducer = (state = { cartItems: [], shippingAddress: {} }, action) => {
     switch (action.type) {
         case 'CART_ADD_ITEM':
             const item = action.payLoad
@@ -19,6 +19,11 @@ export const  cartReducer = (state = {cartItems: []}, action) => {
             return {
                 ...state,
                 cartItems: [...state.cartItems.filter(x => x.product !== action.payLoad)]
+            }
+        case 'CART_SAVE_SHIPPING_ADDRESS':
+            return {
+                ...state,
+                shippingAddress: action.payLoad
             }
 
         default:
