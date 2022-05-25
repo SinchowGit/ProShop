@@ -14,11 +14,13 @@ export const createOrder = (order) => async (dispatch, getState) => {
         }
 
         const { data } = await axios.post('/api/orders',order,config)
-        console.log(data)
         dispatch({
             type: 'ORDER_CREATE_SUCCESS',
             payLoad: data
         })
+        dispatch({ type: 'CART_RESET' })
+
+        localStorage.removeItem('cartItems')
     } catch (error) {
         dispatch({
             type: 'ORDER_CREATE_FAIL',
