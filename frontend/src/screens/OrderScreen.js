@@ -22,9 +22,8 @@ const OrderDetailsScreen = () => {
 
     const orderPay = useSelector(state => state.orderPay)
     const { loading: loadingPay, success: successPay } = orderPay
-    
-    useEffect(()=>{
 
+    useEffect(()=>{
         const addPayPalScript = async () => {
             const { data: clientId } = await axios.get('/api/config/paypal')
             const script = document.createElement('script')
@@ -34,9 +33,9 @@ const OrderDetailsScreen = () => {
             script.onload = () => setSdkReady(true)
             document.body.appendChild(script)
         }
-
-        if(!order || successPay){
+        if(!order || successPay || order._id!==id){
             dispatch({ type: 'ORDER_PAY_RESET' })
+            dispatch( { type: 'ORDER_DETAILS_RESET' } )
             dispatch(getOrderDetails(id))
         }else if(!order.isPaid){
             if(!window.paypal){
@@ -55,7 +54,7 @@ const OrderDetailsScreen = () => {
 
   return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <>
-            <h1>ORDER {id}</h1>
+            <h1>ORDER {order._id}</h1>
             <Row>
                 <Col md={8}>
                     <ListGroup variant='flush'>

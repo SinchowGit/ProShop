@@ -28,10 +28,14 @@ const PlaceOrderScreen = () => {
     useEffect(()=>{
         if(success){
             navigate(`/orders/${order._id}`)
+            dispatch({ type: 'ORDER_CREATE_RESET' })
+            dispatch({ type: 'CART_RESET' })
+            localStorage.removeItem('cartItems')
         }
-    },[success, navigate,order])
+    },[success, navigate, order, dispatch])
 
     const placeOrderHandler = e => {
+        console.log("Order placed")
         dispatch(createOrder({
             orderItems: cart.cartItems,
             shippingAddress: cart.shippingAddress,
@@ -39,7 +43,7 @@ const PlaceOrderScreen = () => {
             itemsPrice: cart.itemsPrice,
             shippingPrice: cart.shippingPrice,
             taxPrice: cart.taxPrice,
-            totalPrice: cart.taxPrice
+            totalPrice: cart.totalPrice
         }))
     }
 

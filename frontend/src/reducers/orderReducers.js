@@ -6,6 +6,8 @@ export const orderCreateReducer = (state = {}, action) => {
             return { loading: false, success: true, order: action.payLoad }
         case 'ORDER_CREATE_FAIL':
             return { loading: false, error: action.payLoad }
+        case 'ORDER_CREATE_RESET':
+            return {}
         default:
             return state
     }
@@ -19,6 +21,8 @@ export const orderDetailsReducer = (state = { loading: true, orderItems: [], shi
             return { loading: false, order: action.payLoad }
         case 'ORDER_DETAILS_FAIL':
             return { loading: false, error: action.payLoad }
+        case 'ORDER_DETAILS_RESET':
+            return { loading: true, orderItems: [], shippingAddress: {} }
         default:
             return state
     }

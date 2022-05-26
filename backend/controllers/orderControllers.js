@@ -23,8 +23,13 @@ const createOrder = asyncHandler( async (req,res) => {
             shippingPrice,
             totalPrice
         })
-        await order.save()
-        res.status(201).json(order)
+        const createdOrder = await order.save()
+        if(createOrder){
+            res.status(201).json(createdOrder)
+        }else{
+            throw new Error('Something went wrong')
+        }
+        
     }
 })
 
