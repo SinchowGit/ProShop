@@ -19,7 +19,7 @@ function ProductListScreen() {
     const { userInfo } = userLogin
 
     const userDelete = useSelector(state => state.userDelete)
-    const { success: successDelete} = userDelete
+    const { loading: loadingDelete, error: errorDelete, success: successDelete} = userDelete
 
     useEffect(()=>{
         if(userInfo && userInfo.isAdmin){
@@ -27,7 +27,6 @@ function ProductListScreen() {
         }else{
             navigate('/login')
         }
-        
     },[dispatch, userInfo, navigate, successDelete])
 
     const deleteProductHandler = (id) => {
@@ -36,10 +35,8 @@ function ProductListScreen() {
         }
     }
 
-    const createProductHandler = (id) => {
-        if(window.confirm('Are you sure?')){
-            dispatch(deleteProduct(id))
-        }
+    const createProductHandler = () => {
+        
     }
 
   return (
@@ -54,6 +51,8 @@ function ProductListScreen() {
                 </Button>
             </Col>
         </Row>
+        {loadingDelete && <Loader />}
+        {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
             <Table striped bordered responsive hover size='sm'>
                 <thead>
