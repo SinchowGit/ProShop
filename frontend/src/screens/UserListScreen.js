@@ -64,7 +64,7 @@ function UserListScreen() {
                                 }
                             </td>
                             <td>
-                                <LinkContainer to={`/users/${user._id}/edit`}>
+                                <LinkContainer to={`/admin/users/${user._id}/edit`}>
                                     <Button className='btn-sm' variant='light'>
                                         <i className="fa-solid fa-edit"></i>
                                     </Button>
