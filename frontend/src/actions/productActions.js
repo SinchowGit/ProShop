@@ -85,3 +85,28 @@ export const createProduct = () => async (dispatch, getState) => {
         })
     }
 }
+
+export const updateProduct = (product) => async (dispatch, getState) => {
+    try {
+        dispatch({type: 'PRODUCT_UPDATE_REQUEST'})
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        const { data } = await axios.put(`/api/products/${product._id}`, product, config)
+        dispatch({
+            type: 'PRODUCT_UPDATE_SUCCESS',
+            payLoad: data
+        })
+    } catch (error) {
+        dispatch({
+            type: 'PRODUCT_UPDATE_FAIL',
+            payLoad: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+}
