@@ -55,3 +55,16 @@ export const myOrdersReducer = (state = { loading: true }, action) => {
             return state
     }
 }
+
+export const OrdersListReducer = (state = { loading: true }, action) => {
+    switch (action.type) {
+        case 'ORDERS_REQUEST':
+            return { loading: true }
+        case 'ORDERS_SUCCESS':
+            return { loading: false, orders: action.payLoad }
+        case 'ORDERS_FAIL':
+            return { loading: false, error: action.payLoad }
+        default:
+            return state
+    }
+}
