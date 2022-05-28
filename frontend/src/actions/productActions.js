@@ -52,11 +52,35 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
         dispatch({
             type: 'PRODUCT_DELETE_SUCCESS',
         })
-
-        dispatch(listProducts())
     } catch (error) {
         dispatch({
             type: 'PRODUCT_DELETE_FAIL',
+            payLoad: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+}
+
+export const createProduct = () => async (dispatch, getState) => {
+    try {
+        dispatch({type: 'PRODUCT_CREATE_REQUEST'})
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        const { data } = await axios.post(`/api/products`, {} , config)
+        console.log(data)
+        dispatch({
+            type: 'PRODUCT_CREATE_SUCCESS',
+            payLoad: data
+        })
+    } catch (error) {
+        dispatch({
+            type: 'PRODUCT_CREATE_FAIL',
             payLoad: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }

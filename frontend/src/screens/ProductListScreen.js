@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
-import { deleteProduct, listProducts } from '../actions/productActions'
+import { createProduct, deleteProduct, listProducts } from '../actions/productActions'
 
 function ProductListScreen() {
     const dispatch = useDispatch()
@@ -18,16 +18,26 @@ function ProductListScreen() {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    const userDelete = useSelector(state => state.userDelete)
-    const { loading: loadingDelete, error: errorDelete, success: successDelete} = userDelete
+    const productDelete = useSelector(state => state.productDelete)
+    const { loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete
+    
+    const productCreate = useSelector(state => state.productCreate)
+    const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct} = productCreate
 
     useEffect(()=>{
-        if(userInfo && userInfo.isAdmin){
-            dispatch(listProducts())
-        }else{
+        dispatch({ type: 'PRODUCT_CREATE_RESET'})
+
+        if(!userInfo || !userInfo.isAdmin){
             navigate('/login')
         }
-    },[dispatch, userInfo, navigate, successDelete])
+
+        if(successCreate){
+            navigate(`/admin/products/${createdProduct._id}/edit`)
+        }else{
+            dispatch(listProducts())
+        }
+        
+    },[dispatch, userInfo, navigate, successDelete, successCreate, createdProduct])
 
     const deleteProductHandler = (id) => {
         if(window.confirm('Are you sure?')){
@@ -36,7 +46,7 @@ function ProductListScreen() {
     }
 
     const createProductHandler = () => {
-        
+        dispatch(createProduct())
     }
 
   return (
@@ -45,7 +55,7 @@ function ProductListScreen() {
             <Col>
                 <h1>Products</h1>
             </Col>
-            <Col style={{'text-align': 'right'}}>
+            <Col style={{'textAlign': 'right'}}>
                 <Button className='my-3' onClick={createProductHandler}>
                     <i className="fa-solid fa-plus"></i> Create Product
                 </Button>
@@ -53,6 +63,8 @@ function ProductListScreen() {
         </Row>
         {loadingDelete && <Loader />}
         {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+        {loadingCreate && <Loader />}
+        {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
             <Table striped bordered responsive hover size='sm'>
                 <thead>

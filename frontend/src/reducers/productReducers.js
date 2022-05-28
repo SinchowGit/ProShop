@@ -31,7 +31,22 @@ export const productDeleteReducer = (state = {}, action) => {
         case 'PRODUCT_DELETE_SUCCESS':
             return { loading: false, success: true }
         case 'PRODUCT_DELETE_FAIL':
-            return { loading: false, error: action.payLoad, success: false }
+            return { loading: false, error: action.payLoad }
+        default:
+            return state
+    }
+}
+
+export const productCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case 'PRODUCT_CREATE_REQUEST':
+            return { loading: true }
+        case 'PRODUCT_CREATE_SUCCESS':
+            return { loading: false, success: true, product: action.payLoad }
+        case 'PRODUCT_CREATE_FAIL':
+            return { loading: false, error: action.payLoad }
+        case 'PRODUCT_CREATE_RESET':
+            return { }
         default:
             return state
     }
