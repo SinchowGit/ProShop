@@ -96,39 +96,39 @@ const ProductEditScreen = () => {
         error ? <Message variant='danger'>{error}</Message>
             :
         <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
+            <Form.Group controlId='name' className='my-2'>
                 <Form.Label>Name</Form.Label>
                 <Form.Control type='text' placeholder='Enter Name' value={name} onChange={(e) => setName(e.target.value)} />
             </Form.Group>
 
-            <Form.Group controlId='price'>
+            <Form.Group controlId='price' className='my-2'>
                 <Form.Label>Price</Form.Label>
                 <Form.Control type='number' placeholder='Enter Price' value={price} onChange={(e) => setPrice(e.target.value)} />
             </Form.Group>
 
-            <Form.Group controlId='image'>
+            <Form.Group controlId='image' className='my-2'>
                 <Form.Label>Image</Form.Label>
                 <Form.Control type='text' placeholder='Enter Image' value={image} onChange={(e) => setImage(e.target.value)} />
                 <Form.Control type='file' label='Choose image' onChange={uploadFileHandler}></Form.Control>
                 {uploading && <Loader />}
             </Form.Group>
 
-            <Form.Group controlId='description'>
+            <Form.Group controlId='description' className='my-2'>
                 <Form.Label>Description</Form.Label>
                 <Form.Control type='text' placeholder='Enter Description' value={description} onChange={(e) => setDescription(e.target.value)} />
             </Form.Group>
 
-            <Form.Group controlId='category'>
+            <Form.Group controlId='category' className='my-2'>
                 <Form.Label>Category</Form.Label>
                 <Form.Control type='text' placeholder='Enter Category' value={category} onChange={(e) => setCategory(e.target.value)} />
             </Form.Group>
 
-            <Form.Group controlId='brand'>
+            <Form.Group controlId='brand' className='my-2'>
                 <Form.Label>Brand</Form.Label>
                 <Form.Control type='text' placeholder='Enter Brand' value={brand} onChange={(e) => setBrand(e.target.value)} />
             </Form.Group>
 
-            <Form.Group controlId='countInStock'>
+            <Form.Group controlId='countInStock' className='my-2'>
                 <Form.Label>CountInStock</Form.Label>
                 <Form.Control type='text' placeholder='Enter CountInStock' value={countInStock} onChange={(e) => setCountInStock(e.target.value)} />
             </Form.Group>
