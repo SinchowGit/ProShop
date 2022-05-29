@@ -1,10 +1,11 @@
 import React, { useEffect} from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Paginate from '../components/Paginate'
 
 import { createProduct, deleteProduct, listProducts } from '../actions/productActions'
 
@@ -12,8 +13,10 @@ function ProductListScreen() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const { pageNumber } = useParams()
+
     const productList = useSelector(state => state.productList)
-    const { loading, error, products} = productList
+    const { loading, error, products, page, pages} = productList
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -26,7 +29,7 @@ function ProductListScreen() {
 
     useEffect(()=>{
         dispatch({ type: 'PRODUCT_CREATE_RESET'})
-
+        console.log(window.location.pathname)
         if(!userInfo || !userInfo.isAdmin){
             navigate('/login')
         }
@@ -34,10 +37,10 @@ function ProductListScreen() {
         if(successCreate){
             navigate(`/admin/products/${createdProduct._id}/edit`)
         }else{
-            dispatch(listProducts())
+            dispatch(listProducts('', pageNumber))
         }
         
-    },[dispatch, userInfo, navigate, successDelete, successCreate, createdProduct])
+    },[dispatch, userInfo, navigate, successDelete, successCreate, createdProduct, pageNumber])
 
     const deleteProductHandler = (id) => {
         if(window.confirm('Are you sure?')){
@@ -66,6 +69,7 @@ function ProductListScreen() {
         {loadingCreate && <Loader />}
         {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
         {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
+            <>
             <Table striped bordered responsive hover size='sm'>
                 <thead>
                     <tr>
@@ -99,6 +103,8 @@ function ProductListScreen() {
                     ))}
                 </tbody>
             </Table>
+            <Paginate page={page} pages={pages} />
+            </>
         )}
     </>
   )
