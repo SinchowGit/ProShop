@@ -26,23 +26,29 @@ const UserEditScreen = () => {
     const userUpdate = useSelector(state => state.userUpdate)
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate
 
-    
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
 
     useEffect(() => {
-        if(successUpdate){
-            dispatch({ type: 'USER_UPDATE_RESET' })
-            dispatch({ type: 'USER_DETAILS_RESET' })
-            navigate('/admin/userlist')
+        if(!userInfo || !userInfo.isAdmin){
+            navigate('/login')
         }else{
-            if(!user.name || user._id!==id){
-                dispatch(getUserDetails(id))
+            if(successUpdate){
+                dispatch({ type: 'USER_UPDATE_RESET' })
+                dispatch({ type: 'USER_DETAILS_RESET' })
+                navigate('/admin/userlist')
             }else{
-                setName(user.name)
-                setEmail(user.email)
-                setIsAdmin(user.isAdmin)
+                if(!user.name || user._id!==id){
+                    dispatch(getUserDetails(id))
+                }else{
+                    setName(user.name)
+                    setEmail(user.email)
+                    setIsAdmin(user.isAdmin)
+                }
             }
         }
-    }, [dispatch, id, user, successUpdate, navigate])
+    }, [dispatch, id, user, successUpdate, navigate, userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()

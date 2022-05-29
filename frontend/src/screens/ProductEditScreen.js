@@ -27,6 +27,9 @@ const ProductEditScreen = () => {
     
     const [uploading, setUploading] = useState(false)
 
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
 
@@ -34,6 +37,9 @@ const ProductEditScreen = () => {
     const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
 
     useEffect(() => {
+        if(!userInfo || !userInfo.isAdmin){
+            navigate('/login')
+        }
         if(successUpdate){
             dispatch({ type: 'PRODUCT_UPDATE_RESET' })
             navigate('/admin/productlist')
@@ -50,7 +56,7 @@ const ProductEditScreen = () => {
                 setCountInStock(product.countInStock)
             }
         }
-    }, [dispatch, id, product, successUpdate, navigate])
+    }, [dispatch, id, product, successUpdate, navigate, userInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()
