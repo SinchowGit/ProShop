@@ -112,8 +112,8 @@ const ProfileScreen = () => {
                                 <td>{order._id}</td>
                                 <td>{order.createdAt.substring(0,10)}</td>
                                 <td>{order.totalPrice}</td>
-                                <td>{order.isPaid ? order.paidAt.substring(0,10) : <i class="fa-solid fa-xmark" style={{color: 'red'}}></i>}</td>
-                                <td>{order.isDelivered ? order.deliveredAt.substring(0,10) : <i class="fa-solid fa-xmark" style={{color: 'red'}}></i>}</td>
+                                <td>{order.isPaid ? order.paidAt.substring(0,10) : <i className="fa-solid fa-xmark" style={{color: 'red'}}></i>}</td>
+                                <td>{order.isDelivered ? order.deliveredAt.substring(0,10) : <i className="fa-solid fa-xmark" style={{color: 'red'}}></i>}</td>
                                 <td>
                                     <LinkContainer to={`/orders/${order._id}`}>
                                         <Button className='btn-sm' variant='light'>Details</Button>
