@@ -8,6 +8,8 @@ import { listProductDetails, createProductReview } from '../actions/productActio
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Ratings from '../components/Rating'
+import Meta from '../components/Meta'
+
 
 const ProductScreen = () => {
     const [qty, setQty] = useState(1)
@@ -48,6 +50,7 @@ const ProductScreen = () => {
 
   return (
     <>
+      <Meta title={product.name}/>
         <Link className='btn btn-dark my-3' to='/'>Go Back</Link>
         {loading ? (
           <Loader />
